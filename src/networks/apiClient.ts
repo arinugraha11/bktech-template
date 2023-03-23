@@ -2,7 +2,7 @@ import axios from "axios";
 
 const axiosClient = axios.create({
   // Put your base URL here
-  baseURL: "https://pokeapi.co/api/v2/",
+  baseURL: "https://backend-dev-tbth.onrender.com",
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
