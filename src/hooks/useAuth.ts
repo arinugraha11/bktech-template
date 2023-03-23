@@ -7,6 +7,11 @@ interface RegisterDataInterface {
   password: string;
 }
 
+interface LoginDataInterface {
+  email: string;
+  password: string;
+}
+
 interface RegisterResponse {
   data: {
     email: string;
@@ -16,7 +21,16 @@ interface RegisterResponse {
   status: number;
 }
 
+interface LoginResponse {
+  status: number;
+  error: string[];
+  data: {
+    token: string;
+  };
+}
+
 const useAuth = () => {
+  const [loginResponse, setLoginResponse] = useState<LoginResponse>();
   const [registerResponses, setRegisterResponses] =
     useState<RegisterResponse>();
 
@@ -41,11 +55,30 @@ const useAuth = () => {
     []
   );
 
+  const loginAccount = useCallback(
+    async ({ email, password }: LoginDataInterface) => {
+      try {
+        const loginData = {
+          email: email,
+          password: password,
+        };
+
+        const responseLogin = await axiosClient.post("/auth/login", loginData);
+        setLoginResponse(responseLogin.data);
+      } catch (err) {
+        console.log("[Login Account]", err);
+      }
+    },
+    []
+  );
+
   return {
     loading,
     isAuthenticated,
     registerAccount,
+    loginAccount,
     registerResponses,
+    loginResponse,
   };
 };
 
