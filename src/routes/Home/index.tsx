@@ -1,11 +1,11 @@
 import React from "react";
-import useGetAllUser from "../../hooks/useGetAllUser";
+import useGetPokemon from "../../hooks/useGetPokemon";
 import { ColoredDiv } from "./styles";
 
 const Home = () => {
-  const { listUser } = useGetAllUser();
+  const { data, status } = useGetPokemon("pokemon/ditto");
 
-  console.log("[List User]", listUser);
+  console.log(data, status);
 
   return (
     <div>
