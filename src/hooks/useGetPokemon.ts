@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { axiosClient } from "../networks/apiClient";
+import axiosClient from "../networks/apiClient";
 
 /**
  * This is for REST API custom hooks
