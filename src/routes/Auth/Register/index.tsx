@@ -6,33 +6,41 @@ const { Item } = Form;
 const { Password } = Input;
 const { Title } = Typography;
 
-const Login = () => {
-  const { loginAccount, loginResponse } = useAuth();
+const Register = () => {
+  const { registerAccount, registerResponses } = useAuth();
 
-  const onFinish = (values: any) => {
-    loginAccount(values);
+  const onFinish = async (values: any) => {
+    registerAccount(values);
   };
 
   useEffect(() => {
-    if (loginResponse) {
-      if (loginResponse.error === null) {
-        message.success("Login Success");
+    if (registerResponses) {
+      if (registerResponses?.error === null) {
+        message.success("Success Register");
         return;
       }
 
-      message.error(loginResponse.error[0]);
+      message.error(registerResponses?.error[0]);
     }
-  }, [loginResponse]);
+  }, [registerResponses]);
 
   return (
     <div>
-      <Title>Login</Title>
+      <Title>Register</Title>
       <Form
-        name="login"
+        name="register"
         initialValues={{ remember: true }}
         onFinish={onFinish}
         autoComplete="off"
       >
+        <Item
+          label="Username"
+          name="name"
+          rules={[{ required: true, message: "Please input your username!" }]}
+        >
+          <Input />
+        </Item>
+
         <Item
           label="Email"
           name="email"
@@ -51,7 +59,7 @@ const Login = () => {
 
         <Item>
           <Button type="primary" htmlType="submit">
-            Login
+            Submit
           </Button>
         </Item>
       </Form>
@@ -59,4 +67,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

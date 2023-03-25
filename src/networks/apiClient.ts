@@ -1,15 +1,24 @@
 import axios from "axios";
+import UniversalCookie from "universal-cookie";
 
-const axiosClient = axios.create({
+export const cookies = new UniversalCookie();
+
+export const axiosClient = axios.create({
   // Put your base URL here
-  baseURL: "https://pokeapi.co/api/v2/",
+  baseURL: "https://backend-dev-tbth.onrender.com",
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
   },
 });
 
-// If there are authentication, use this interceptor
-// axiosClient.interceptors.response.use();
+// Interceptor for authentication
+axiosClient.interceptors.request.use((config) => {
+  const token = cookies.get("jwt_token");
 
-export default axiosClient;
+  if (token) {
+    config.headers = config.headers || {};
+    config.headers.Authorization = `token ${token}`;
+  }
+  return config;
+});

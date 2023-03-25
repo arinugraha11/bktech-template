@@ -5,6 +5,7 @@ import { Route, Routes } from "react-router-dom";
 import PrivateRoutes from "../components/PrivateRoutes";
 import About from "./About";
 import Login from "./Auth/Login";
+import Register from "./Auth/Register";
 import Home from "./Home";
 
 const MainRoutes = () => {
@@ -17,6 +18,7 @@ const MainRoutes = () => {
 
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 
       {/* Add more routes below */}
     </Routes>
