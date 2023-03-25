@@ -1,6 +1,7 @@
 import { message } from "antd";
 import Cookies from "js-cookie";
 import { useCallback, useState } from "react";
+import jwtDecode from "jwt-decode";
 import axiosClient from "../../networks/apiClient";
 import {
   LoginDataInterface,
@@ -46,7 +47,12 @@ const useAuth = () => {
         const responseLogin = await axiosClient.post("/auth/login", loginData);
 
         if (responseLogin.data.error === null) {
-          Cookies.set("jwt_token", responseLogin.data.data.token);
+          const token = responseLogin.data.data.token;
+          Cookies.set("jwt_token", token);
+
+          const data_user = jwtDecode(token) as { [key: string]: any };
+
+          console.log("[User Data]", data_user);
         }
 
         setLoginResponse(responseLogin.data);
