@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axiosClient from "../networks/apiClient";
+import { axiosClient } from "../networks/apiClient";
 
 const useGetAllUser = () => {
   const [status, setStatus] = useState("idle");

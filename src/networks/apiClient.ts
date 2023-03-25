@@ -1,6 +1,9 @@
 import axios from "axios";
+import UniversalCookie from "universal-cookie";
 
-const axiosClient = axios.create({
+export const cookies = new UniversalCookie();
+
+export const axiosClient = axios.create({
   // Put your base URL here
   baseURL: "https://backend-dev-tbth.onrender.com",
   headers: {
@@ -9,17 +12,13 @@ const axiosClient = axios.create({
   },
 });
 
-// If there are authentication, use this interceptor
+// Interceptor for authentication
 axiosClient.interceptors.request.use((config) => {
-  console.log("999 ini token");
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNzg2NjNiLWY4ZDktNDY1ZC1iYWI0LTM1Mjc1ZjdiNjY2ZiIsImVtYWlsIjoiYXJpOTlAZ21haWwuY29tIiwibmFtZSI6ImFyaTEyMyIsInBob25lX251bWJlciI6bnVsbCwiaW1hZ2VfdXJsIjpudWxsLCJpYXQiOjE2Nzk1ODMwNjUsImV4cCI6MTY3OTU5Mzg2NX0.gvwe7cCcJEnArW9QMT4krLpm2GPGzAYEVa4t90ejPh4";
-  config.headers = config.headers || {};
+  const token = cookies.get("jwt_token");
 
   if (token) {
+    config.headers = config.headers || {};
     config.headers.Authorization = `token ${token}`;
   }
   return config;
 });
-
-export default axiosClient;

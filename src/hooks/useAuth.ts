@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import axiosClient from "../networks/apiClient";
+import { axiosClient, cookies } from "../networks/apiClient";
 
 interface RegisterDataInterface {
   email: string;
@@ -64,6 +64,13 @@ const useAuth = () => {
         };
 
         const responseLogin = await axiosClient.post("/auth/login", loginData);
+
+        if (responseLogin.data.error === null) {
+          cookies.set("jwt_token", responseLogin.data.data.token, {
+            httpOnly: true,
+          });
+        }
+
         setLoginResponse(responseLogin.data);
       } catch (err) {
         console.log("[Login Account]", err);
