@@ -7,4 +7,5 @@ export const colors = {
   lightRed: "rgba(246, 106, 57, 0.3)",
   primaryRed: "#EB5757",
   white: "#FFFFFF",
+  orange: "#F66A39",
 };
